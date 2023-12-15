@@ -14,4 +14,8 @@ class Post extends Model
         'body',
         'isPublished'
     ];
+
+    public function tags(){
+        return $this->belongsToMany(Tag::class, 'tag_post');
+    }
 }
