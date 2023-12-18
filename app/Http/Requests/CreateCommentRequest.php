@@ -5,15 +5,15 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class CreatePostRequest extends FormRequest
+class CreateCommentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        if(Auth::check()) return true;
-        return false;
+        if(!Auth::check()) return false;
+        return true;
     }
 
     /**
@@ -24,8 +24,8 @@ class CreatePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|min:5|max:255',
-            'body' => 'required|string|min:10|max:5000',
+            'content' => 'required|max:255',
+            'post_id' => 'required|exists:posts,id',
             'user_id' => 'required|exists:users,id'
         ];
     }

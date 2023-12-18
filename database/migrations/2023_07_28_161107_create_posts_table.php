@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->longText('body');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->boolean('isPublished')->default(true);
             $table->timestamps();
         });

@@ -11,6 +11,6 @@
             @include('components.postcard')
         @endforeach
 
-        {{ $posts }}
+        {{ $posts->links() }}
     </div>
 @endsection

@@ -14,7 +14,7 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $posts = Post::paginaton(3);
+        $posts = Post::paginate(3);
         return view('pages.posts', compact('posts'));
     }
 
@@ -26,7 +26,8 @@ class PostsController extends Controller
 
         $post = Post::create([
             'title' => $request->title,
-            'body' => $request->body
+            'body' => $request->body,
+            'user_id' => $request->user_id
         ]);
 
         $post->tags()->attach($request->tags);

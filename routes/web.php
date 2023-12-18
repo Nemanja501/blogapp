@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +39,7 @@ Route::middleware('notauthentificated')->group(function (){
 Route::middleware('authentificated')->group(function (){
     Route::get('/createpost', [PostsController::class, 'createPost']);
     Route::get('/logout', [AuthController::class, 'destroy']);
+    Route::post('/createcomment', [CommentsController::class, 'store']);
 });
 
 // Route::post('/register', [AuthController::class, 'register']);

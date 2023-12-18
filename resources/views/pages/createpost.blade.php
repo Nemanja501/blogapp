@@ -26,6 +26,7 @@
                 @endforeach
             </select>
         </div>
+        <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
         <button type="submit" class="btn btn-primary">Save Post</button>
     </form>
 
