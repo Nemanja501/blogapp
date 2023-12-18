@@ -12,6 +12,7 @@
     @foreach ($post->tags as $tag)
         <a href="/tags/{{ $tag->name }}"><span class="badge rounded-pill text-bg-secondary">{{ $tag->name }}</span></a>
     @endforeach
+    <br><br>
     @include('components.createcomment')
     @include('components.errors')
     @include('components.status')

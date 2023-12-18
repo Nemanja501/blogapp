@@ -41,6 +41,7 @@ Route::middleware('authentificated')->group(function (){
     Route::get('/logout', [AuthController::class, 'destroy']);
     Route::post('/createcomment', [CommentsController::class, 'store']);
 });
+Route::get('/email/verify/{id}', [AuthController::class, 'verifyEmail']);
 
 // Route::post('/register', [AuthController::class, 'register']);
 // Route::post('/login', [AuthController::class, 'login']);

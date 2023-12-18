@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateCommentRequest;
+use App\Mail\CreateCommentMail;
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class CommentsController extends Controller
 {
@@ -22,7 +24,13 @@ class CommentsController extends Controller
     public function store(CreateCommentRequest $request)
     {
         $comment = Comment::create($request->all());
-        $postId = $comment->post_id;
+        $postComments = $comment->post->comments()->distinct('user_id')->get();
+        $mailData = $comment->only('content');
+        $mailData2 = $comment->user->only('name');
+        foreach($postComments as $postComment){
+            Mail::to($postComment->user->email)->send(new CreateCommentMail($mailData, $mailData2));
+        }
+        $postId = $comment->post->id;
         return redirect("/posts/$postId")->with('status', 'Comment successfully created!');
     }
 
