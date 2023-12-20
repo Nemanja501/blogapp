@@ -1,0 +1,27 @@
+@extends('layout.default')
+
+@section('content')
+<form action="{{ url('posts') }}" method="POST">
+    @method('PUT')
+    @csrf
+    <h1>Update post</h1>
+    <div class="mb-3">
+        <label class="form-label">Title</label>
+        <input class="form-control" type="text" name="title" placeholder="Enter title" required />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Body</label>
+        <textarea class="form-control" type="text" name="body" placeholder="Enter body" required></textarea>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Tags</label>
+        <select class="form-control" name="tags[]" multiple>
+            @foreach ($tags as $tag)
+                <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+            @endforeach
+        </select>
+    </div>
+    <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+    <button type="submit" class="btn btn-primary">Save Post</button>
+</form>
+@endsection

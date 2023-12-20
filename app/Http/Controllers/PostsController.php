@@ -21,6 +21,11 @@ class PostsController extends Controller
         return view('pages.posts', compact('posts'));
     }
 
+    public function showUpdatePost(){
+        $tags = Tag::all();
+        return view('pages.updatepost', compact('tags'));
+    }
+
     /**
      * Store a newly created resource in storage.
      */

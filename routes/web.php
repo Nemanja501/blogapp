@@ -21,10 +21,6 @@ Route::get('/', function () {
     return view('pages.home');
 });
 
-// Route::get('/posts', [PostsController::class, 'index']);
-// Route::get('/posts/{id}', [PostsController::class, 'show']);
-// Route::post('/createpost', [PostsController::class, 'store']);
-
 
 Route::resource('/posts', 'App\Http\Controllers\PostsController');
 Route::resource('/auth', 'App\Http\Controllers\AuthController');
@@ -40,8 +36,10 @@ Route::middleware('authentificated')->group(function (){
     Route::get('/createpost', [PostsController::class, 'createPost']);
     Route::get('/logout', [AuthController::class, 'destroy']);
     Route::post('/createcomment', [CommentsController::class, 'store']);
+    Route::get('/deletecomment/{id}', [CommentsController::class, 'destroy']);
+    Route::get('/updatecomment/{id}', [CommentsController::class, 'showUpdateComment']);
+    Route::put('/updatecomment/{id}', [CommentsController::class, 'update']);
+    Route::get('/updatepost/{id}', [PostsController::class, 'showUpdatePost']);
 });
 Route::get('/email/verify/{id}', [AuthController::class, 'verifyEmail']);
 
-// Route::post('/register', [AuthController::class, 'register']);
-// Route::post('/login', [AuthController::class, 'login']);

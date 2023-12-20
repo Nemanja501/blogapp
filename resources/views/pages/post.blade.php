@@ -19,7 +19,12 @@
     <br>
     <ul class="list-group">
         @foreach ($post->comments as $comment)
-            <li class="list-group-item">{{ $comment->content }}<br>by: {{ $comment->user->name }}</li>
+            <li class="list-group-item">{{ $comment->content }}<br>by: {{ $comment->user->name }}
+            @if (auth()->check() && auth()->user()->id == $comment->user->id)
+                <a href="/deletecomment/{{ $comment->id }}"><button type="button" class="btn btn-secondary">Delete</button></a>
+                <a href="/updatecomment/{{ $comment->id }}"><button type="button" class="btn btn-secondary">Update</button></a>
+            @endif
+            </li>
         @endforeach
     </ul>
 @endsection

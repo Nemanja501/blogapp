@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateCommentRequest;
+use App\Http\Requests\UpdateCommentRequest;
 use App\Mail\CreateCommentMail;
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class CommentsController extends Controller
@@ -16,6 +18,11 @@ class CommentsController extends Controller
     public function index()
     {
         //
+    }
+
+    public function showUpdateComment(string $id){
+        $comment = Comment::find($id);
+        return view('pages.updatecomment', compact('comment'));
     }
 
     /**
@@ -45,9 +52,15 @@ class CommentsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateCommentRequest $request, string $id)
     {
-        //
+        $comment = Comment::find($id);
+        $postId = $comment->post->id;
+        if(!Auth::user()->id == $comment->user->id){
+            return redirect("/posts/$postId")->withErrors('Cannot update this comment!');
+        }
+        $comment->update($request->all());
+        return redirect("/posts/$postId")->with('status', 'Updated comment!');
     }
 
     /**
@@ -55,6 +68,12 @@ class CommentsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $comment = Comment::find($id);
+        $postId = $comment->post->id;
+        if(!Auth::user()->id == $comment->user->id){
+            return redirect("/posts/$postId")->withErrors('Cannot delete this comment!');
+        }
+        $comment->delete();
+        return redirect("/posts/$postId")->with('status', 'Comment deleted!');
     }
 }
